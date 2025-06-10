@@ -45,7 +45,7 @@ wheels = [
 
 [[package]]
 name = "otel-log-proto-mapper"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "opentelemetry-proto" },
