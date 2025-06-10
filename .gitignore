@@ -1,0 +1,28 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.ruff_cache/
+
+# Environments
+.venv/
+env/
+venv/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor specific
+.idea/
+.vscode/
+
+# Logs
+*.log
