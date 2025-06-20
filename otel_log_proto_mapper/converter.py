@@ -13,9 +13,34 @@ OTEL_SEVERITY_MAP = {
     logging.CRITICAL: otel_logs_pb2.SeverityNumber.SEVERITY_NUMBER_FATAL,
 }
 
+_RESERVED_ATTRIBUTES = frozenset({
+    "name",
+    "msg",
+    "args",
+    "levelname",
+    "levelno",
+    "pathname",
+    "filename",
+    "lineno",
+    "funcName",
+    "created",
+    "asctime",
+    "msecs",
+    "relativeCreated",
+    "thread",
+    "threadName",
+    "processName",
+    "process",
+    "exc_info",
+    "exc_text",
+    "stack_info",
+    "_asctime",
+    "message",
+    "stack_info",
+})
 
 def convert_log_record(
-    record: logging.LogRecord, formatter_func=None
+    record: logging.LogRecord, formatter_func=None, reserved_attributes=_RESERVED_ATTRIBUTES
 ) -> otel_logs_pb2.LogRecord:
     """
     Converts a Python LogRecord to an OTLP LogRecord protobuf message.
@@ -85,31 +110,7 @@ def convert_log_record(
     # Add `extra` attributes from LogRecord.__dict__
     for key, value in record.__dict__.items():
         # Exclude standard LogRecord internal/known fields and those already mapped
-        if key in [
-            "name",
-            "msg",
-            "args",
-            "levelname",
-            "levelno",
-            "pathname",
-            "filename",
-            "lineno",
-            "funcName",
-            "created",
-            "asctime",
-            "msecs",
-            "relativeCreated",
-            "thread",
-            "threadName",
-            "processName",
-            "process",
-            "exc_info",
-            "exc_text",
-            "stack_info",
-            "_asctime",
-            "message",
-            "stack_info",
-        ] or key.startswith("_"):
+        if key in reserved_attributes or key.startswith("_"):
             continue
 
         # Convert value to common_pb2.AnyValue based on type

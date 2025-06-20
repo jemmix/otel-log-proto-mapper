@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "otel-log-proto-mapper"
-version = "0.1.4" # Make sure this matches __init__.py
+version = "0.1.5" # Make sure this matches __init__.py
 authors = [
   { name="Andrey Ilyin", email="jemmix@gmail.com" },
 ]
